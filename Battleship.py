@@ -64,11 +64,14 @@ class Board:
             print rowLines
         print
 
-def attack(board, space):
+def attack(board, selection):
     global gameOver
 
-    if space not in board.choices:
+    if selection not in board.choices:
         space = randList(board.choices)
+        print selection, "is not a viable option. Using", space, "instead."
+    else:
+        space = selection
     print space
     letter = space[0]
     number = int(space[1:])
@@ -104,11 +107,15 @@ enemyBoard = Board()
 playerBoard.toString()'''
 
 enemyBoard.toString()
+turns = 0
 while not gameOver:
     try:
-        target = raw_input("Which space would you like to attack? ").upper().strip()
+        turns += 1
+        target = raw_input("Turn " + str(turns) + ": Which space would you like to attack? ").upper().strip()
         attack(enemyBoard, target)
     except KeyboardInterrupt:
         print
         quit()
+
+print "You took", turns, "turns out of a possible", str(size*size) + "."
 print "Game Over!"
